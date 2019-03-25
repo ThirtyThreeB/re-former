@@ -3,6 +3,10 @@ class UsersController < ApplicationController
 		@user = User.new
 	end
 
+	def show
+		@user = User.find(params[:id])
+	end
+
 	def create
 			# @user = User.new
 			# @user = User.new(username: params[:username], email: params[:email], password: params[:password])
@@ -21,9 +25,23 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 	end
 
+	def update
+		# debugger
+		@user = User.find(params[:id])
+
+		if @user.update_attributes(user_params)
+			redirect_to user_path
+		else
+			render :edit
+		end
+	end
+
+
 	private
 
 	def user_params
 		params.require(:user).permit(:username, :email, :password)
 	end
+
+
 end
